@@ -1,10 +1,9 @@
 package com.afaaq.campagnon.controller;
 
-import com.afaaq.campagnon.dto.CampaignDTO;
+import com.afaaq.campagnon.dto.CampaignDto;
 import com.afaaq.campagnon.model.Campaign;
 import com.afaaq.campagnon.service.CampaignService;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +32,7 @@ public class CampaignController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> createNewCampaign(@Valid @RequestBody CampaignDTO campaign) {
+    public ResponseEntity<Map<String, String>> createNewCampaign(@Valid @RequestBody CampaignDto campaign) {
         campaignService.createNewCampaign(campaign);
         return new ResponseEntity<>(
                 Map.of("message", "Campaign by name " + campaign.getName() + " successfully created !"),

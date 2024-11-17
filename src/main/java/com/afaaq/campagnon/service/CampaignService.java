@@ -1,7 +1,8 @@
 package com.afaaq.campagnon.service;
 
-import com.afaaq.campagnon.dto.CampaignDTO;
+import com.afaaq.campagnon.dto.CampaignDto;
 import com.afaaq.campagnon.exception.CampaignNotFoundException;
+import com.afaaq.campagnon.mapper.CampaignMapper;
 import com.afaaq.campagnon.model.Campaign;
 import com.afaaq.campagnon.repository.CampaignRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.List;
 public class CampaignService {
 
     private final CampaignRepository campaignRepository;
+    private final CampaignMapper campaignMapper;
 
     public List<Campaign> getAllCampaigns() {
         return campaignRepository.findAll();
@@ -25,13 +27,8 @@ public class CampaignService {
         );
     }
 
-    public void createNewCampaign(CampaignDTO campaignDTO) {
-        Campaign campaign = new Campaign();
-        campaign.setName(campaignDTO.getName());
-        campaign.setDescription(campaignDTO.getDescription());
-        campaign.setTarget(campaignDTO.getTarget());
-        campaign.setImage(campaignDTO.getImage());
-
+    public void createNewCampaign(CampaignDto campaignDTO) {
+        Campaign campaign = campaignMapper.toCampaignEntity(campaignDTO);
         campaignRepository.save(campaign);
     }
 }
