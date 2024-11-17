@@ -1,6 +1,7 @@
 package com.afaaq.campagnon.controller;
 
-import com.afaaq.campagnon.dto.CampaignDto;
+import com.afaaq.campagnon.dto.CampaignRequestDto;
+import com.afaaq.campagnon.dto.CampaignResponseDto;
 import com.afaaq.campagnon.model.Campaign;
 import com.afaaq.campagnon.service.CampaignService;
 import jakarta.validation.Valid;
@@ -26,13 +27,13 @@ public class CampaignController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<Campaign> getCampaignByName(@PathVariable String name) {
-        Campaign campaign = campaignService.getCampaignByName(name);
+    public ResponseEntity<CampaignResponseDto> getCampaignByName(@PathVariable String name) {
+        CampaignResponseDto campaign = campaignService.getCampaignDtoByName(name);
         return new ResponseEntity<>(campaign, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> createNewCampaign(@Valid @RequestBody CampaignDto campaign) {
+    public ResponseEntity<Map<String, String>> createNewCampaign(@Valid @RequestBody CampaignRequestDto campaign) {
         campaignService.createNewCampaign(campaign);
         return new ResponseEntity<>(
                 Map.of("message", "Campaign by name " + campaign.getName() + " successfully created !"),

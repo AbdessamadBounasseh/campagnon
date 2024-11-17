@@ -1,6 +1,7 @@
 package com.afaaq.campagnon.service;
 
-import com.afaaq.campagnon.dto.CampaignDto;
+import com.afaaq.campagnon.dto.CampaignRequestDto;
+import com.afaaq.campagnon.dto.CampaignResponseDto;
 import com.afaaq.campagnon.exception.CampaignNotFoundException;
 import com.afaaq.campagnon.mapper.CampaignMapper;
 import com.afaaq.campagnon.model.Campaign;
@@ -27,8 +28,23 @@ public class CampaignService {
         );
     }
 
-    public void createNewCampaign(CampaignDto campaignDTO) {
-        Campaign campaign = campaignMapper.toCampaignEntity(campaignDTO);
+    public CampaignResponseDto getCampaignDtoByName(String name) {
+        Campaign campaign = campaignRepository.findByName(name).orElseThrow(
+                () -> new CampaignNotFoundException("Campaign by name: " + name + " not found !")
+        );
+        return campaignMapper.toCampaignResponseDto(campaign);
+    }
+
+    public void createNewCampaign(CampaignRequestDto campaignResponseDTO) {
+        Campaign campaign = campaignMapper.toCampaignEntity(campaignResponseDTO);
+        campaignRepository.save(campaign);
+    }
+
+    public void addAmount(Campaign campaign, Double amount) {
+        campaign.setCurrentAmount(campaign.getCurrentAmount() + amount);
+    }
+
+    public void saveCampaign(Campaign campaign) {
         campaignRepository.save(campaign);
     }
 }
