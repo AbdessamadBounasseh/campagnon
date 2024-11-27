@@ -18,18 +18,20 @@ public class CampaignService {
     private final CampaignRepository campaignRepository;
     private final CampaignMapper campaignMapper;
 
-    public List<Campaign> getAllCampaigns() {
-        return campaignRepository.findAll();
+    public List<CampaignResponseDto> getAllCampaigns() {
+        return campaignRepository.findAll().stream().map(
+                campaignMapper::toCampaignResponseDto
+        ).toList();
     }
 
     public Campaign getCampaignByName(String name) {
-        return campaignRepository.findByName(name).orElseThrow(
+        return campaignRepository.findByNameIgnoreCase(name).orElseThrow(
                 () -> new CampaignNotFoundException("Campaign by name: " + name + " not found !")
         );
     }
 
     public CampaignResponseDto getCampaignDtoByName(String name) {
-        Campaign campaign = campaignRepository.findByName(name).orElseThrow(
+        Campaign campaign = campaignRepository.findByNameIgnoreCase(name).orElseThrow(
                 () -> new CampaignNotFoundException("Campaign by name: " + name + " not found !")
         );
         return campaignMapper.toCampaignResponseDto(campaign);

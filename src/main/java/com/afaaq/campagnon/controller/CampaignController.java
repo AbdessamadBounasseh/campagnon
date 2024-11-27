@@ -2,7 +2,6 @@ package com.afaaq.campagnon.controller;
 
 import com.afaaq.campagnon.dto.CampaignRequestDto;
 import com.afaaq.campagnon.dto.CampaignResponseDto;
-import com.afaaq.campagnon.model.Campaign;
 import com.afaaq.campagnon.service.CampaignService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +20,8 @@ public class CampaignController {
     private final CampaignService campaignService;
 
     @GetMapping
-    public ResponseEntity<List<Campaign>> getAllCampaigns() {
-        List<Campaign> campaigns = campaignService.getAllCampaigns();
+    public ResponseEntity<List<CampaignResponseDto>> getAllCampaigns() {
+        List<CampaignResponseDto> campaigns = campaignService.getAllCampaigns();
         return new ResponseEntity<>(campaigns, HttpStatus.OK);
     }
 

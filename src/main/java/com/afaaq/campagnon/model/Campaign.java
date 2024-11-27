@@ -16,18 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Campaign extends BaseEntity {
 
-    @Builder
-    public Campaign(String name, String description, Double target, Double currentAmount,
-                    String image, List<Transaction> transactions, Instant lastUpdatedOn) {
-        this.name = name;
-        this.description = description;
-        this.target = target;
-        this.currentAmount = currentAmount;
-        this.image = image;
-        this.transactions = transactions;
-        this.lastUpdatedOn = lastUpdatedOn;
-    }
-
     @Column(nullable = false, unique = true)
     private String name;
 
@@ -49,6 +37,18 @@ public class Campaign extends BaseEntity {
 
     @UpdateTimestamp
     private Instant lastUpdatedOn;
+
+    @Builder
+    public Campaign(String name, String description, Double target, Double currentAmount,
+                    String image, List<Transaction> transactions, Instant lastUpdatedOn) {
+        this.name = name;
+        this.description = description;
+        this.target = target;
+        this.currentAmount = currentAmount;
+        this.image = image;
+        this.transactions = transactions;
+        this.lastUpdatedOn = lastUpdatedOn;
+    }
 
     @PrePersist
     public void calculateRestAmountAndInitCurrentAmount() {
