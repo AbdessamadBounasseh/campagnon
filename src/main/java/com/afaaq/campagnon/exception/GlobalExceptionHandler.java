@@ -27,6 +27,13 @@ public class GlobalExceptionHandler {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
+
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(CampaignAlreadyExists.class)
+    public ResponseEntity<Map<String, String>> handleCampaignAlreadyExists(CampaignAlreadyExists exception) {
+        Map<String, String> message = Map.of("message", exception.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 }

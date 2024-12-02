@@ -39,4 +39,12 @@ public class CampaignController {
                 HttpStatus.CREATED
         );
     }
+
+    @PutMapping("/{name}")
+    public ResponseEntity<Map<String, String>> updateCampaign(
+            @PathVariable("name") String campaignName,
+            @Valid @RequestBody CampaignRequestDto campaignRequestDto) {
+        campaignService.updateCampaign(campaignName, campaignRequestDto);
+        return ResponseEntity.ok().body(Map.of("message", "Campaign updated successfully !"));
+    }
 }
