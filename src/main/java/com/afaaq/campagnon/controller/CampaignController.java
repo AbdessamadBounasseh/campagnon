@@ -47,4 +47,10 @@ public class CampaignController {
         campaignService.updateCampaign(campaignName, campaignRequestDto);
         return ResponseEntity.ok().body(Map.of("message", "Campaign updated successfully !"));
     }
+
+    @DeleteMapping("/{name}")
+    public ResponseEntity<Map<String, String>> deleteCampaignByName(@PathVariable("name") String campaignName) {
+        campaignService.deleteCampaignByName(campaignName);
+        return ResponseEntity.ok().body(Map.of("message", "Campaign deleted successfully !"));
+    }
 }

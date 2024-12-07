@@ -13,4 +13,6 @@ public interface CampaignRepository extends JpaRepository<Campaign, Long> {
 
     @Query("select c from Campaign c order by c.lastUpdatedOn desc")
     List<Campaign> findAllCampaigns();
+
+    void deleteByName(String name);
 }

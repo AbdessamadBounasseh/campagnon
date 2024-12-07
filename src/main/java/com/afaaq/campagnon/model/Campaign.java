@@ -3,6 +3,8 @@ package com.afaaq.campagnon.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
@@ -14,6 +16,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "campaigns")
+@SQLDelete(sql = "UPDATE campaigns SET deleted_on = now() WHERE ID = ?")
+@SQLRestriction("deleted_on is NULL")
 public class Campaign extends BaseEntity {
 
     @Column(nullable = false, unique = true)

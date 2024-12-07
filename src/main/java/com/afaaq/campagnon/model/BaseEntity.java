@@ -21,4 +21,6 @@ public class BaseEntity {
 
     @CreationTimestamp
     private Instant createdOn;
+
+    private Instant deletedOn;
 }

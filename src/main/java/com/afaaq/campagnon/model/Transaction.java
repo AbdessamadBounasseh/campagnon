@@ -1,10 +1,9 @@
 package com.afaaq.campagnon.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Getter
@@ -12,6 +11,9 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "transactions")
+@SQLDelete(sql = "UPDATE transactions SET deleted_on = now() WHERE ID = ?")
+@SQLRestriction("deleted_on is NULL")
 public class Transaction extends BaseEntity {
 
     @Column(nullable = false)

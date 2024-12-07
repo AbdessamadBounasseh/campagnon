@@ -10,6 +10,7 @@ import com.afaaq.campagnon.repository.CampaignRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -72,6 +73,11 @@ public class CampaignService {
         campaignUpdate.setId(campaign.getId());
         campaignUpdate.setCurrentAmount(campaign.getCurrentAmount());
         campaignRepository.save(campaignUpdate);
+    }
+
+    @Transactional
+    public void deleteCampaignByName(String name) {
+        campaignRepository.deleteByName(name);
     }
 
     private void sleep() {
