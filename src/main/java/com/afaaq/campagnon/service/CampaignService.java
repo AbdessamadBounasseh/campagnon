@@ -8,7 +8,6 @@ import com.afaaq.campagnon.mapper.CampaignMapper;
 import com.afaaq.campagnon.model.Campaign;
 import com.afaaq.campagnon.repository.CampaignRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
