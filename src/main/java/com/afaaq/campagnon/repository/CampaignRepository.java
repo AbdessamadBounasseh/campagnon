@@ -11,6 +11,8 @@ public interface CampaignRepository extends JpaRepository<Campaign, Long> {
 
     Optional<Campaign> findByNameIgnoreCase(String name);
 
+    Optional<Campaign> findByName(String name);
+
     @Query("select c from Campaign c order by c.lastUpdatedOn desc")
     List<Campaign> findAllCampaigns();
 

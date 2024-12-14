@@ -16,23 +16,26 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CampaignService {
+public class CampaignService implements ICampaignService {
 
     private final CampaignRepository campaignRepository;
     private final CampaignMapper campaignMapper;
 
+    @Override
     public List<CampaignResponseDto> getAllCampaigns() {
         return campaignRepository.findAllCampaigns().stream().map(
                 campaignMapper::toCampaignResponseDto
         ).toList();
     }
 
+    @Override
     public Campaign getCampaignByName(String name) {
         return campaignRepository.findByNameIgnoreCase(name).orElseThrow(
                 () -> new CampaignNotFoundException("Campaign by name: " + name + " not found !")
         );
     }
 
+    @Override
     public CampaignResponseDto getCampaignDtoByName(String name) {
         Campaign campaign = campaignRepository.findByNameIgnoreCase(name).orElseThrow(
                 () -> new CampaignNotFoundException("Campaign by name: " + name + " not found !")
@@ -40,13 +43,13 @@ public class CampaignService {
         return campaignMapper.toCampaignResponseDto(campaign);
     }
 
+    @Override
     public void createNewCampaign(CampaignRequestDto campaignResponseDTO) {
-        sleep();
-
         Campaign campaign = campaignMapper.toCampaignEntity(campaignResponseDTO);
         campaignRepository.save(campaign);
     }
 
+    @Override
     public void addAmount(Campaign campaign, Double amount) {
         campaign.setCurrentAmount(campaign.getCurrentAmount() + amount);
     }
@@ -55,10 +58,9 @@ public class CampaignService {
         campaignRepository.save(campaign);
     }
 
+    @Override
     public void updateCampaign(String name, CampaignRequestDto campaignRequest) {
-        sleep();
-
-        // Verify if campaign by ID exists
+        // Verify if campaign by name exists
         Campaign campaign = getCampaignByName(name);
 
         // Verify if name is unique
@@ -74,16 +76,9 @@ public class CampaignService {
         campaignRepository.save(campaignUpdate);
     }
 
+    @Override
     @Transactional
     public void deleteCampaignByName(String name) {
         campaignRepository.deleteByName(name);
-    }
-
-    private void sleep() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new IllegalStateException("Error occurred in thread !");
-        }
     }
 }
